@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SHIHAB OFFICIAL • Premium Admin</title>
+
+<style>
+:root{
+  --bg:#070b12;
+  --panel:#101a29;
+  --panel2:#0b1421;
+  --line:#203449;
+  --text:#eaf6ff;
+  --muted:#8da5b8;
+  --accent:#20d6c2;
+  --blue:#4b8dff;
+  --danger:#e05265;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,sans-serif;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+#login{
+  max-width:430px;
+  margin:10vh auto;
+  padding:25px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:20px;
+}
+.logo{
+  color:var(--accent);
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:1px;
+  margin-bottom:8px;
+}
+.subtitle{color:var(--muted);font-size:12px}
+input{
+  width:100%;
+  padding:13px;
+  margin:7px 0;
+  color:var(--text);
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:10px;
+  outline:none;
+}
+input:focus{border-color:var(--accent)}
+button{
+  padding:11px 15px;
+  border:0;
+  border-radius:10px;
+  color:white;
+  font-weight:750;
+  background:linear-gradient(110deg,#16bda9,#268cce);
+}
+button:disabled{opacity:.5}
+.secondary{background:#203449}
+.danger{background:#a8324c}
+.full{width:100%;margin-top:10px}
+.status{
+  color:var(--accent);
+  font-size:13px;
+  margin-top:12px;
+  overflow-wrap:anywhere;
+}
+.hint{color:var(--muted);font-size:12px;line-height:1.6}
+
+.layout{display:flex;min-height:100vh}
+.sidebar{
+  width:245px;
+  flex-shrink:0;
+  padding:22px 15px;
+  background:#0b1421;
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+}
+.brand{
+  padding:10px 8px 25px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:20px;
+}
+.brand strong{font-size:20px;color:var(--accent)}
+.brand small{display:block;color:var(--muted);margin-top:7px;font-size:10px;letter-spacing:1.5px}
+.nav-title{
+  color:#607b91;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  padding:12px 10px;
+}
+.nav-btn{
+  width:100%;
+  text-align:left;
+  background:transparent;
+  color:#9db4c8;
+  margin:3px 0;
+  padding:12px;
+  border:1px solid transparent;
+}
+.nav-btn:hover,.nav-btn.active{
+  background:#142b3a;
+  color:var(--accent);
+  border-color:#24505a;
+}
+.sidebar-bottom{margin-top:auto}
+.main{flex:1;min-width:0;padding:25px}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:25px;
+}
+.topbar h1{font-size:23px;margin:0}
+.topbar p{font-size:12px;color:var(--muted);margin:5px 0}
+.panel{
+  background:linear-gradient(145deg,#111f30,#0c1725);
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:20px;
+  margin-bottom:17px;
+}
+.panel h2{font-size:15px;margin:0 0 17px}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-bottom:20px;
+}
+.stat{
+  padding:20px;
+  border-radius:16px;
+  background:linear-gradient(140deg,#112c3d,#101a2a);
+  border:1px solid #25485a;
+}
+.stat span{font-size:11px;color:var(--muted);letter-spacing:1px}
+.stat b{
+  display:block;
+  font-size:30px;
+  color:var(--accent);
+  margin-top:8px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:12px;
+}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.actions button{font-size:11px;padding:8px 10px}
+.tablewrap{
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+table{
+  width:100%;
+  min-width:780px;
+  border-collapse:collapse;
+}
+th,td{
+  text-align:left;
+  padding:13px;
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+}
+th{
+  color:#8fb4c8;
+  background:#122438;
+  font-size:10px;
+  letter-spacing:1px;
+}
+td{color:#dcecf5}
+tbody tr:hover{background:#15283a}
+.pill{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#173c32;
+  color:#7cf0b3;
+  font-size:10px;
+  font-weight:800;
+}
+.pill.off{background:#48252c;color:#ff9eaa}
+.pill.expired{background:#493a1d;color:#fcd34d}
+.section{display:none}
+.section.active{display:block}
+.menu-toggle{display:none}
+footer{
+  color:#617c91;
+  text-align:center;
+  font-size:10px;
+  padding:25px 0;
+}
+@media(max-width:750px){
+  .layout{display:block}
+  .sidebar{
+    width:100%;
+    padding:12px;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{padding:5px 8px 12px;margin-bottom:8px}
+  .brand strong{font-size:18px}
+  .nav-title{display:none}
+  .nav-list{
+    display:flex;
+    overflow-x:auto;
+    gap:5px;
+  }
+  .nav-btn{
+    white-space:nowrap;
+    width:auto;
+    font-size:11px;
+    padding:10px;
+  }
+  .sidebar-bottom{display:none}
+  .main{padding:16px 12px}
+  .stats{grid-template-columns:1fr}
+  .stat{padding:14px}
+  .stat b{font-size:25px}
+  .topbar h1{font-size:19px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<section id="login">
+  <div class="logo">👑 SHIHAB OFFICIAL</div>
+  <div class="subtitle">PREMIUM ADMIN CONTROL PANEL</div>
+  <br>
+  <h3>Admin Login</h3>
+  <input id="adminId" placeholder="Admin ID" autocomplete="username">
+  <input id="password" type="password" placeholder="Admin Password" autocomplete="current-password">
+  <button class="full" id="loginBtn">LOGIN TO DASHBOARD</button>
+  <div id="loginMsg" class="status"></div>
+  <p class="hint">Secure Firebase Authentication</p>
+</section>
+
+<!-- DASHBOARD -->
+<div id="app" class="layout hidden">
+
+<aside class="sidebar">
+  <div class="brand">
+    <strong>👑 SHIHAB OFFICIAL</strong>
+    <small>P20 PREMIUM CONTROL</small>
+  </div>
+
+  <div class="nav-title">MAIN MENU</div>
+  <div class="nav-list">
+    <button class="nav-btn active" data-page="overview">◈ Overview</button>
+    <button class="nav-btn" data-page="create">＋ Create Key</button>
+    <button class="nav-btn" data-page="manage">⌕ Manage Keys</button>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="nav-title">ACCOUNT</div>
+    <button id="logoutBtn" class="nav-btn">↪ Logout</button>
+    <p class="hint">SHIHAB OFFICIAL<br>Admin Access Only</p>
+  </div>
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+  <div>
+    <h1 id="pageTitle">Overview</h1>
+    <p>Welcome to your premium control center.</p>
+  </div>
+  <button class="secondary" id="logoutTop">LOG OUT</button>
+</header>
+
+<!-- OVERVIEW -->
+<section id="overview" class="section active">
+
+  <div class="stats">
+    <div class="stat">
+      <span>TOTAL KEYS</span>
+      <b id="total">0</b>
+    </div>
+    <div class="stat">
+      <span>ACTIVE KEYS</span>
+      <b id="enabled">0</b>
+    </div>
+    <div class="stat">
+      <span>DEVICE LOCKED</span>
+      <b id="locked">0</b>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>◈ CONTROL CENTER</h2>
+    <p class="hint">Manage your premium access keys from one place.</p>
+    <div class="actions">
+      <button onclick="navigate('create')">＋ CREATE NEW KEY</button>
+      <button class="secondary" onclick="navigate('manage')">⌕ MANAGE KEYS</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>RECENT KEY ACTIVITY</h2>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>KEY</th>
+            <th>STATUS</th>
+            <th>EXPIRY</th>
+          </tr>
+        </thead>
+        <tbody id="recentRows">
+          <tr><td colspan="3">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CREATE -->
+<section id="create" class="section">
+  <div class="panel">
+    <h2>✦ CREATE ACCESS KEY</h2>
+
+    <div class="grid">
+      <input id="newKey" placeholder="Example: SHIHAB-7DAY">
+      <input id="days" type="number" min="1" max="3650" value="7" placeholder="Validity Days">
+      <input id="deviceLimit" type="number" min="1" value="1" placeholder="Device Limit">
+    </div>
+
+    <button id="createBtn" style="margin-top:12px">＋ GENERATE KEY</button>
+    <div id="createMsg" class="status"></div>
+  </div>
+</section>
+
+<!-- MANAGE -->
+<section id="manage" class="section">
+  <div class="panel">
+    <h2>⌕ KEY MANAGEMENT</h2>
+    <input id="filter" type="search" placeholder="Search keys by name...">
+
+    <p class="hint">
+      Manage status, devices, expiry dates and access keys.
+    </p>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>KEY</th>
+            <th>STATUS</th>
+            <th>DEVICE</th>
+            <th>LIMIT</th>
+            <th>EXPIRY</th>
+            <th>ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td colspan="6">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="listMsg" class="status"></div>
+  </div>
+</section>
+
+<footer>SHIHAB OFFICIAL • PREMIUM ADMIN DASHBOARD</footer>
+</main>
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+  getDatabase,
+  ref,
+  set,
+  update,
+  remove,
+  onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// FIREBASE CONFIG - ORIGINAL
+const firebaseConfig = {
+  apiKey: "AIzaSyBxpi3J2QDl1Lo_VbqJHSi6K59vjBM9I_w",
+  authDomain: "admin-app-9961b.firebaseapp.com",
+  databaseURL: "https://admin-app-9961b-default-rtdb.firebaseio.com",
+  projectId: "admin-app-9961b",
+  appId: "1:648288371411:web:c2c4e7364734510941ca26"
+};
+
+const ADMIN_ID = "SHIHAB";
+const ADMIN_AUTH_EMAIL =
+"shihab-admin@admin-app-9961b.firebaseapp.com";
+
+const ADMIN_UID = "nEUplrTgEHO7LRQaFCdj6af6nNJ2";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const $ = id => document.getElementById(id);
+
+let keyData = {};
+let stopListening = null;
+
+function msg(id,text){
+  $(id).textContent = text;
+}
+
+function safeKey(key){
+  return /^[A-Za-z0-9_-]{3,80}$/.test(key);
+}
+
+function dateText(ms){
+  return ms
+    ? new Date(Number(ms)).toLocaleString()
+    : "—";
+}
+
+// NAVIGATION
+window.navigate = function(page){
+
+  document.querySelectorAll(".section")
+    .forEach(s=>s.classList.remove("active"));
+
+  document.querySelectorAll(".nav-btn[data-page]")
+    .forEach(b=>b.classList.remove("active"));
+
+  $(page).classList.add("active");
+
+  const btn = document.querySelector(
+    `.nav-btn[data-page="${page}"]`
+  );
+
+  if(btn) btn.classList.add("active");
+
+  const titles = {
+    overview:"Overview",
+    create:"Create Access Key",
+    manage:"Key Management"
+  };
+
+  $("pageTitle").textContent = titles[page];
+};
+
+document.querySelectorAll(".nav-btn[data-page]")
+.forEach(btn=>{
+  btn.onclick=()=>navigate(btn.dataset.page);
+});
+
+// LOGIN
+$("loginBtn").onclick = async()=>{
+
+  msg("loginMsg","");
+
+  const id = $("adminId").value.trim();
+
+  if(id.toUpperCase() !== ADMIN_ID){
+    msg("loginMsg","Invalid Admin ID or password.");
+    return;
+  }
+
+  const btn = $("loginBtn");
+  btn.disabled = true;
+
+  try{
+    await signInWithEmailAndPassword(
+      auth,
+      ADMIN_AUTH_EMAIL,
+      $("password").value
+    );
+  }catch(e){
+    msg("loginMsg","Login failed: "+e.message);
+  }finally{
+    btn.disabled = false;
+  }
+};
+
+// LOGOUT
+async function logout(){
+  await signOut(auth);
+}
+
+$("logoutBtn").onclick = logout;
+$("logoutTop").onclick = logout;
+
+// AUTH STATE
+onAuthStateChanged(auth,async user=>{
+
+  if(stopListening){
+    stopListening();
+    stopListening=null;
+  }
+
+  if(!user){
+    $("login").classList.remove("hidden");
+    $("app").classList.add("hidden");
+    return;
+  }
+
+  if(user.uid !== ADMIN_UID){
+    msg("loginMsg","Unauthorized admin account.");
+    await signOut(auth);
+    return;
+  }
+
+  $("login").classList.add("hidden");
+  $("app").classList.remove("hidden");
+
+  stopListening = onValue(
+    ref(db,"scriptKeys"),
+    snap=>{
+      keyData = snap.val() || {};
+      render();
+    },
+    err=>{
+      msg("listMsg","Database error: "+err.message);
+    }
+  );
+});
+
+// RENDER
+function render(){
+
+  const entries = Object.entries(keyData);
+
+  $("total").textContent = entries.length;
+
+  $("enabled").textContent = entries.filter(
+    ([,v])=>
+      v?.enabled === true &&
+      Number(v?.expiresAt || 0) > Date.now()
+  ).length;
+
+  $("locked").textContent = entries.filter(
+    ([,v])=>!!v?.deviceId
+  ).length;
+
+  // RECENT KEYS
+  $("recentRows").replaceChildren();
+
+  const recent = entries.slice(-5).reverse();
+
+  if(!recent.length){
+    $("recentRows").innerHTML =
+      '<tr><td colspan="3">No keys created yet.</td></tr>';
+  }
+
+  recent.forEach(([key,v])=>{
+
+    const tr = document.createElement("tr");
+    const td1 = document.createElement("td");
+    const td2 = document.createElement("td");
+    const td3 = document.createElement("td");
+
+    const expired = Number(v?.expiresAt||0) <= Date.now();
+
+    td1.textContent = key;
+
+    const badge = document.createElement("span");
+    badge.className = "pill " +
+      (expired ? "expired" : v.enabled===true ? "" : "off");
+
+    badge.textContent =
+      expired ? "EXPIRED" :
+      v.enabled===true ? "ACTIVE" : "BLOCKED";
+
+    td2.append(badge);
+    td3.textContent = dateText(v?.expiresAt);
+
+    tr.append(td1,td2,td3);
+    $("recentRows").append(tr);
+  });
+
+  // KEY TABLE
+  const query = $("filter").value.toLowerCase();
+
+  const shown = entries.filter(
+    ([key])=>key.toLowerCase().includes(query)
+  );
+
+  $("rows").replaceChildren();
+
+  if(!shown.length){
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 6;
+    td.textContent = "No keys found.";
+    tr.append(td);
+    $("rows").append(tr);
+    return;
+  }
+
+  shown.forEach(([key,v])=>{
+
+    const tr = document.createElement("tr");
+
+    const td0 = document.createElement("td");
+    const td1 = document.createElement("td");
+    const td2 = document.createElement("td");
+    const td3 = document.createElement("td");
+    const td4 = document.createElement("td");
+    const td5 = document.createElement("td");
+
+    td0.textContent = key;
+
+    const expired =
+      Number(v?.expiresAt||0) <= Date.now();
+
+    const badge = document.createElement("span");
+
+    badge.className =
+      "pill "+(expired?"expired":v.enabled===true?"":"off");
+
+    badge.textContent =
+      expired?"EXPIRED":
+      v.enabled===true?"ACTIVE":"BLOCKED";
+
+    td1.append(badge);
+
+    td2.textContent =
+      v.deviceId ? String(v.deviceId).slice(0,18)+"…" : "Not linked";
+
+    const limitValue = Number(v.deviceLimit);
+
+    td3.textContent =
+      Number.isSafeInteger(limitValue)&&limitValue>0
+      ? String(limitValue)
+      : "1 (default)";
+
+    td4.textContent = dateText(v.expiresAt);
+    td5.className = "actions";
+
+    // BLOCK / UNBLOCK
+    const toggle = document.createElement("button");
+    toggle.className = "secondary";
+    toggle.textContent =
+      v.enabled===true?"BLOCK":"UNBLOCK";
+
+    toggle.onclick = async()=>{
+      try{
+        await update(ref(db,"scriptKeys/"+key),{
+          enabled:!(v.enabled===true)
+        });
+        msg("listMsg",key+" status updated.");
+      }catch(e){
+        msg("listMsg",e.message);
+      }
+    };
+
+    // UNBIND
+    const reset = document.createElement("button");
+    reset.className = "secondary";
+    reset.textContent = "UNBIND";
+
+    reset.onclick = async()=>{
+      if(!confirm("Unbind device for "+key+"?")) return;
+
+      try{
+        await update(ref(db,"scriptKeys/"+key),{
+          deviceId:null
+        });
+        msg("listMsg","Device unbound: "+key);
+      }catch(e){
+        msg("listMsg",e.message);
+      }
+    };
+
+    // DEVICE LIMIT
+    const limit = document.createElement("button");
+    limit.className = "secondary";
+    limit.textContent = "SET LIMIT";
+
+    limit.onclick = async()=>{
+
+      const current =
+        Number.isSafeInteger(limitValue)&&limitValue>0
+        ?limitValue:1;
+
+      const raw = prompt(
+        "New Device Limit:",
+        String(current)
+      );
+
+      if(raw===null) return;
+
+      const n = Number(raw.trim());
+
+      if(!/^\d+$/.test(raw.trim())||
+         !Number.isSafeInteger(n)||n<1){
+        alert("Enter a positive whole number.");
+        return;
+      }
+
+      try{
+        await update(ref(db,"scriptKeys/"+key),{
+          deviceLimit:n
+        });
+        msg("listMsg","Device Limit updated.");
+      }catch(e){
+        msg("listMsg",e.message);
+      }
+    };
+
+    // EXPIRY
+    const expiry = document.createElement("button");
+    expiry.className = "secondary";
+    expiry.textContent = "SET EXPIRY";
+
+    expiry.onclick = async()=>{
+
+      const raw = prompt(
+        "New expiry date (YYYY-MM-DD):",
+        new Date(
+          Number(v.expiresAt||Date.now())
+        ).toISOString().slice(0,10)
+      );
+
+      if(!raw) return;
+
+      const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(raw);
+
+      if(!match){
+        alert("Use YYYY-MM-DD.");
+        return;
+      }
+
+      const y=Number(match[1]);
+      const m=Number(match[2]);
+      const d=Number(match[3]);
+
+      const date=new Date(y,m-1,d,23,59,59,999);
+
+      if(date.getFullYear()!==y||
+         date.getMonth()!==m-1||
+         date.getDate()!==d){
+        alert("Invalid calendar date.");
+        return;
+      }
+
+      try{
+        await update(ref(db,"scriptKeys/"+key),{
+          expiresAt:date.getTime()
+        });
+        msg("listMsg","Expiry updated.");
+      }catch(e){
+        msg("listMsg",e.message);
+      }
+    };
+
+    // DELETE
+    const del = document.createElement("button");
+    del.className = "danger";
+    del.textContent = "DELETE";
+
+    del.onclick = async()=>{
+      if(!confirm("Permanently delete "+key+"?")) return;
+
+      try{
+        await remove(ref(db,"scriptKeys/"+key));
+        msg("listMsg","Key deleted.");
+      }catch(e){
+        msg("listMsg",e.message);
+      }
+    };
+
+    td5.append(toggle,reset,limit,expiry,del);
+
+    tr.append(td0,td1,td2,td3,td4,td5);
+
+    $("rows").append(tr);
+  });
+}
+
+// SEARCH
+$("filter").oninput = render;
+
+// CREATE KEY
+$("createBtn").onclick = async()=>{
+
+  const btn = $("createBtn");
+
+  const key = $("newKey").value.trim();
+  const days = Number($("days").value);
+  const limitRaw = $("deviceLimit").value.trim();
+  const deviceLimit = Number(limitRaw);
+
+  msg("createMsg","");
+
+  if(!auth.currentUser||
+     auth.currentUser.uid!==ADMIN_UID){
+    msg("createMsg","Admin session missing.");
+    return;
+  }
+
+  if(!safeKey(key)){
+    msg("createMsg","Use 3-80 letters, numbers, _ or -.");
+    return;
+  }
+
+  if(!/^\d+$/.test(limitRaw)||
+     !Number.isSafeInteger(deviceLimit)||
+     deviceLimit<1){
+    msg("createMsg","Invalid Device Limit.");
+    return;
+  }
+
+  if(!Number.isInteger(days)||days<1||days>3650){
+    msg("createMsg","Validity must be 1-3650 days.");
+    return;
+  }
+
+  if(Object.prototype.hasOwnProperty.call(keyData,key)){
+    msg("createMsg","This key already exists.");
+    return;
+  }
+
+  const now = Date.now();
+  const expiresAt = now+days*86400000;
+
+  btn.disabled = true;
+  btn.textContent = "CREATING...";
+
+  try{
+
+    await set(ref(db,"scriptKeys/"+key),{
+      enabled:true,
+      deviceLimit,
+      expiresAt,
+      createdAt:now
+    });
+
+    $("newKey").value = "";
+
+    msg(
+      "createMsg",
+      "✓ Key created successfully. Expiry: "+dateText(expiresAt)
+    );
+
+  }catch(e){
+
+    msg("createMsg","Create failed: "+e.message);
+
+  }finally{
+
+    btn.disabled = false;
+    btn.textContent = "＋ GENERATE KEY";
+  }
+};
+
+</script>
+</body>
+</html>
